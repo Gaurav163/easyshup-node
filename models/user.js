@@ -8,6 +8,7 @@ const userSchema = new schema(
         name: String,
         email: String,
         password: String,
+        type: String,
         verify: String,
     },
     {
