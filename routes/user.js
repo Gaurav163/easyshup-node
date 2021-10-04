@@ -11,13 +11,14 @@ router.route("/register").post(async (req, res) => {
         var userCheck = await User.findOne({ email: req.body.email });
         if (userCheck) {
             console.log("User elready exist");
-            res.json({ status: "400", message: "User Already exsit" })
+            res.status(400).json({ message: "User Already exsit" })
         }
         else {
 
             var otp = Math.floor((Math.random() * 10000000) + 1);
             var user = req.body;
             user.verify = otp;
+            if (!user.type) user.type = "customer";
             console.log(user);
             // await email(user.email, otp);
             user.password = await User.hashPassword(user.password);
@@ -26,12 +27,12 @@ router.route("/register").post(async (req, res) => {
             await newuser.save();
             newuser.password = "hidden";
             newuser.verify = "pending";
-            res.json({ status: "200", User: newuser });
+            res.status(200).json({ User: newuser });
         }
     }
     catch (err) {
         console.log(err);
-        res.json({ status: "502", message: "Something Went Wrong on Server" });
+        res.status(500).json({ message: "Something Went Wrong on Server" });
 
     }
 });
@@ -42,7 +43,7 @@ router.route("/login").post(async (req, res) => {
     var user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-        res.json({ status: "404", message: "User Not Found" });
+        res.status(400).json({ message: "User Not Exist" });
     }
     // else if (user.verify !== "Verified") {
     //     res.json({ status: "401", message: "Email verification Pending" });
@@ -51,14 +52,15 @@ router.route("/login").post(async (req, res) => {
     else {
         var permission = await bcrypt.compare(req.body.password, user.password);
         if (!permission) {
-            res.json({ status: "401", message: "Wrong Password" });
+            res.status(401).json({ message: "Wrong Password" });
         } else {
             const userr = {
                 email: user.email,
+                name: user.name
             };
             const token = jwt.sign(userr, process.env.JWT_secret_token);
 
-            res.json({ status: "200", token: token });
+            res.status(200).json({ token: token });
         }
     }
 });
