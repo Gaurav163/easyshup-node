@@ -46,8 +46,7 @@ router.route("/login").post(async (req, res) => {
         res.status(400).json({ message: "User Not Exist" });
     }
     // else if (user.verify !== "Verified") {
-    //     res.json({ status: "401", message: "Email verification Pending" });
-
+    //     res.status(401).json({ message: "Email verification Pending" });
     // }
     else {
         var permission = await bcrypt.compare(req.body.password, user.password);
