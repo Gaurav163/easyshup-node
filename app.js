@@ -17,6 +17,8 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/user", require("./routes/user"));
+app.use("/seller", require("./routes/seller"));
+
 
 
 app.listen(process.env.PORT || 5000, (e) => {

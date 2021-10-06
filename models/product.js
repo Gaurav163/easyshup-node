@@ -7,15 +7,14 @@ const productSchema = new schema(
         name: String,
         brand: String,
         count: Number,
-        seller: String,
+        shop: String,
+        email: String,
         size: String,
         price: Number,
         mrp: Number,
-        review: Array,
-        rating: Array,
-        description: Array,
-        tags: Array,
-        type: String,
+        image: String,
+        description: String,
+        tags: Array
 
     },
     {

@@ -9,6 +9,8 @@ const userSchema = new schema(
         email: String,
         password: String,
         type: String,
+        shop: String,
+        shopadd: String,
         verify: String,
     },
     {
