@@ -20,7 +20,7 @@ module.exports = (user) => {
     };
 
     mailTransporter.sendMail(mailDetails, function (err, data) {
-        if (err) {
+        if (error) {
             console.log('Error Occurs', error);
             throw err;
         } else {
