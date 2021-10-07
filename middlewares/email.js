@@ -19,7 +19,7 @@ module.exports = (user) => {
         html: '<html> <h2> click the link below to verify your email </br>  ' + process.env.domain + '/verify/' + token + ' </h2> </html>'
     };
 
-    mailTransporter.sendMail(mailDetails, function (err, data) {
+    mailTransporter.sendMail(mailDetails, function (error, data) {
         if (error) {
             console.log('Error Occurs', error);
             throw err;
