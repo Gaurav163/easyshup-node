@@ -19,11 +19,12 @@ module.exports = (user) => {
         html: '<html> <h2> click the link below to verify your email </br>  ' + process.env.domain + '/verify/' + token + ' </h2> </html>'
     };
 
-    mailTransporter.sendMail(mailDetails, function (err, data) {
-        if (err) {
-            console.log('Error Occurs');
-        } else {
-            console.log('Email sent successfully');
-        }
-    });
+    mailTransporter.sendMail(mailDetails);
+    // , function (err, data) {
+    //     if (err) {
+    //         console.log('Error Occurs');
+    //     } else {
+    //         console.log('Email sent successfully');
+    //     }
+    // }
 }
