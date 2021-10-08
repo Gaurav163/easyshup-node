@@ -24,7 +24,7 @@ router.route("/register").post(async (req, res) => {
             await newuser.save();
             delete user.password;
             delete user.verify;
-            const { res } = await sendEmail(user);
+            await sendEmail(user);
             res.status(200).json({ User: newuser });
         }
     }
