@@ -22,7 +22,6 @@ module.exports = (user) => {
     mailTransporter.sendMail(mailDetails, function (error, data) {
         if (error) {
             console.log('Error Occurs', error);
-            throw err;
         } else {
             console.log('Email sent successfully');
         }
