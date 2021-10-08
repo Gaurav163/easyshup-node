@@ -8,7 +8,7 @@ const productSchema = new schema(
         brand: String,
         count: Number,
         shop: String,
-        email: String,
+        seller: String,
         size: String,
         price: Number,
         mrp: Number,

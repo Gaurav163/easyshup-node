@@ -28,7 +28,7 @@ router.route("/addproduct").post([auth], async (req, res) => {
             res.status(403).send("Only Sellers Can Add Products!")
         } else {
             let product = req.body;
-            product.email = req.user.email;
+            product.seller = req.user.email;
             product.shop = req.user.shop;
             product.tags = [];
             product.description = "";
