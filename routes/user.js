@@ -19,6 +19,7 @@ router.route("/register").post(async (req, res) => {
             user.shop = "";
             user.shopadd = "";
             user.type = "Customer";
+            user.cart = [];
             user.password = await User.hashPassword(user.password);
             const newuser = new User(user);
             await newuser.save();

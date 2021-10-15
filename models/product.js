@@ -14,7 +14,9 @@ const productSchema = new schema(
         mrp: Number,
         image: String,
         description: String,
-        tags: Array
+        tags: Array,
+        rating: Number,
+        prating: Number
 
     },
     {

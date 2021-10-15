@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
-
 const userSchema = new schema(
     {
         name: String,
@@ -12,6 +11,7 @@ const userSchema = new schema(
         shop: String,
         shopadd: String,
         verify: String,
+        cart: Array
     },
     {
         timestamp: {
