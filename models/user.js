@@ -6,11 +6,13 @@ const userSchema = new schema(
     {
         name: String,
         email: String,
+        phone: Number,
         password: String,
         type: String,
         shop: String,
         shopadd: String,
         verify: String,
+        pverify: String, // phone verify
         cart: Array
     },
     {

@@ -16,7 +16,7 @@ const productSchema = new schema(
         description: String,
         tags: Array,
         rating: Number,
-        prating: Number
+        prating: Number // number of ratings
 
     },
     {

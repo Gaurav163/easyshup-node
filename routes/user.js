@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const sendEmail = require("../middlewares/email");
+const sendSms = require("../middlewares/sms");
+
 
 
 router.route("/register").post(async (req, res) => {
@@ -21,6 +23,10 @@ router.route("/register").post(async (req, res) => {
             user.type = "Customer";
             user.cart = [];
             user.password = await User.hashPassword(user.password);
+            let otp = Math.floor((Math.random() * 1000000) + 1);
+            user.pverify = otp;
+            await sendSms(user.phone, otp);
+
             const newuser = new User(user);
             await newuser.save();
             delete user.password;
