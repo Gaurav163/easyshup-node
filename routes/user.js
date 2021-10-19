@@ -37,7 +37,10 @@ router.route("/register").post(async (req, res) => {
             delete user.password;
             delete user.verify;
             await sendEmail(user);
-            res.status(200).json({ User: newuser });
+            const { password, ...userr } = user;
+            userr.pverify = "pending";
+            const token = jwt.sign(userr, process.env.JWT_secret_token);
+            res.status(200).json({ User: newuser, token });
         }
     }
     catch (err) {
