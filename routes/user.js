@@ -99,7 +99,7 @@ router.route("/register").post(async (req, res) => {
                 await newuser.save();
                 userotp.status = "Done";
                 await OTP.updateOne({ userid: userotp.userid }, userotp);
-                const token = jwt.sign(user, process.env.JWT_secret_token);
+                const token = jwt.sign(newuser.toJSON(), process.env.JWT_secret_token);
                 res.status(200).json({ User: newuser, token });
             }
 
@@ -121,14 +121,14 @@ router.route("/login").post(async (req, res) => {
         user = await User.findOne({ phone: req.body.userid });
     }
     console.log(req.body);
-
+    console.log(user);
     if (!user) {
         res.status(400).json({ message: "User Not Exist" });
     }
-    else if (user.email == req.body.userid && user.verify !== "Verified") {
+    else if (user.email == req.body.userid && user.verify != "Verified") {
         res.status(401).json({ message: "Email verification Pending" });
     }
-    else if (user.phone == req.body.userid && user.pverify !== "Verified") {
+    else if (user.phone == req.body.userid && user.pverify != "Verified") {
         res.status(401).json({ message: "Mobile verification Pending" });
     }
     else {
@@ -136,8 +136,8 @@ router.route("/login").post(async (req, res) => {
         if (!permission) {
             res.status(401).json({ message: "Wrong Password" });
         } else {
-            const { password, ...userr } = user;
-            const token = jwt.sign(userr, process.env.JWT_secret_token);
+
+            const token = jwt.sign(user.toJSON(), process.env.JWT_secret_token);
 
             res.status(200).json({ token: token });
         }
