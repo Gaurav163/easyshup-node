@@ -8,10 +8,13 @@ module.exports = async (phone, otp) => {
             numbers: [phone]
         });
         console.log("Opt sended");
+        return "OTP Sended to Your Mobile";
 
     }
     catch (er) {
         console.log(error);
+        return "OTP Sending Failed! Some Error Occured";
+
     }
 }
 

@@ -37,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/user", require("./routes/user"));
 app.use("/seller", require("./routes/seller"));
+app.use("/products", require("./routes/product"));
+
 
 
 

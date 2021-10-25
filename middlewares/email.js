@@ -1,8 +1,7 @@
 const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
-module.exports = (user) => {
+module.exports = (email, otp) => {
 
-    const token = jwt.sign(user, process.env.JWT_secret_token);
+
 
     let mailTransporter = nodemailer.createTransport({
         service: 'gmail',
@@ -14,16 +13,19 @@ module.exports = (user) => {
 
     let mailDetails = {
         from: process.env.email,
-        to: user.email,
+        to: email,
         subject: "Email Verification for EasyShup",
-        html: '<html> <h2> click the link below to verify your email </br>  ' + process.env.domain + '/verify/' + token + ' </h2> </html>'
+        html: '<html> <h2> OTP for regitering on EASYSHUP is ' + otp + '. </h2> </html>'
     };
 
     mailTransporter.sendMail(mailDetails, function (error, data) {
         if (error) {
             console.log('Error Occurs', error);
+            return "Some Error Occured While Sending Email";
         } else {
             console.log('Email sent successfully');
+            return "Email Sent Successfully";
+
         }
     });
 }
