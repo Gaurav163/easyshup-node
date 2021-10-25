@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-module.exports = (email, otp) => {
+module.exports = async (email, otp) => {
 
 
 
@@ -18,7 +18,7 @@ module.exports = (email, otp) => {
         html: '<html> <h2> OTP for regitering on EASYSHUP is ' + otp + '. </h2> </html>'
     };
 
-    mailTransporter.sendMail(mailDetails, function (error, data) {
+    await mailTransporter.sendMail(mailDetails, function (error, data) {
         if (error) {
             console.log('Error Occurs', error);
             return "Some Error Occured While Sending Email";

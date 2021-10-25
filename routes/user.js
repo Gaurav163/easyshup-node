@@ -12,6 +12,7 @@ router.route("/gernerateotp").post(async (req, res) => {
     try {
         const user = await OTP.findOne({ userid: req.body.userid });
         const newotp = Math.floor((Math.random() * 900000) + 100000);
+        console.log("otp", newotp);
         if (user && user.status == "Done") {
             if (req.body.type == "email")
                 res.status(400).json({ message: "Email Already Used." });
@@ -21,9 +22,13 @@ router.route("/gernerateotp").post(async (req, res) => {
         }
         else {
             if (user) {
-                user.opt = newotp;
+                console.log(user);
+                user.otp = newotp;
                 user.time = Date.now();
-                await OTP.updateOne({ userid: req.body.userid }, user)
+                await OTP.updateOne({ userid: req.body.userid }, user);
+                console.log(user);
+
+
             } else {
                 let newuser = new OTP(req.body);
                 newuser.otp = newotp;
@@ -33,11 +38,11 @@ router.route("/gernerateotp").post(async (req, res) => {
             }
             console.log(req.body.userid, newotp);
             if (req.body.type == "email") {
-                const message = sendEmail(req.body.userid, newotp);
+                const message = await sendEmail(req.body.userid, newotp);
                 res.status(200).json({ message: message });
             }
             else {
-                const message = sendSms(req.body.userid, newotp);
+                const message = await sendSms(req.body.userid, newotp);
                 res.status(200).json({ message: message });
             }
         }
@@ -70,8 +75,9 @@ router.route("/register").post(async (req, res) => {
                 res.status(400).json({ message: "Please Generate OTP First." });
 
             }
-            else if (req.body.user != userotp.otp && 0) {
+            else if (req.body.otp != userotp.otp) {
                 res.status(400).json({ message: "Incorrect OTP" });
+                console.log(userotp.otp);
             } else {
                 console.log(req.body);
                 var user = {};
@@ -136,7 +142,7 @@ router.route("/login").post(async (req, res) => {
         if (!permission) {
             res.status(401).json({ message: "Wrong Password" });
         } else {
-
+            user.cart = [];
             const token = jwt.sign(user.toJSON(), process.env.JWT_secret_token);
 
             res.status(200).json({ token: token });
